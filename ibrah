@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Scramble Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .game-container {
+            text-align: center;
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        .scrambled-word {
+            font-size: 24px;
+            margin: 20px 0;
+            letter-spacing: 2px;
+        }
+        .input-container {
+            margin: 20px 0;
+        }
+        input {
+            font-size: 18px;
+            padding: 10px;
+            width: 80%;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+        }
+        .button {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+        .message {
+            font-size: 18px;
+            color: #4CAF50;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="game-container">
+    <h1>Word Scramble Game</h1>
+    <div class="scrambled-word" id="scrambled-word"></div>
+    <div class="input-container">
+        <input type="text" id="user-input" placeholder="Rearrange the letters..." />
+    </div>
+    <button class="button" onclick="checkAnswer()">Check Answer</button>
+    <div class="message" id="message"></div>
+</div>
+
+<script>
+    // List of words
+    const words = ["javascript", "html", "css", "programming", "computer", "developer"];
+    
+    // Select a random word from the list
+    const chosenWord = words[Math.floor(Math.random() * words.length)];
+    
+    // Function to scramble the word
+    function scrambleWord(word) {
+        const wordArray = word.split('');
+        for (let i = wordArray.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [wordArray[i], wordArray[j]] = [wordArray[j], wordArray[i]];
+        }
+        return wordArray.join('');
+    }
+    
+    // Display the scrambled word
+    const scrambled = scrambleWord(chosenWord);
+    document.getElementById('scrambled-word').textContent = scrambled;
+    
+    // Function to check if the player's answer is correct
+    function checkAnswer() {
+        const userInput = document.getElementById('user-input').value.trim().toLowerCase();
+        const message = document.getElementById('message');
+        
+        if (userInput === chosenWord) {
+            message.textContent = "Correct! Well done!";
+            message.style.color = "#4CAF50"; // Green for correct
+        } else {
+            message.textContent = "Try again!";
+            message.style.color = "#f44336"; // Red for incorrect
+        }
+    }
+</script>
+
+</body>
+</html>
